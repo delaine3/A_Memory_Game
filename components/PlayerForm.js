@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { mutate } from "swr";
 import { Form } from "semantic-ui-react";
 import { tileArray } from "./tile_array";
+import Link from "next/link";
 
 const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const router = useRouter();
@@ -39,8 +40,6 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
       let first = pairArray[0][1];
       let second = pairArray[1][1];
 
-      console.log(first + "---" + second);
-
       if (first != second) {
         selectElements.forEach((anchor) => {
           anchor.style.display = "none";
@@ -55,27 +54,29 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         });
         setTilesOnScreen(tilesOnScreen - 2);
         console.log("ITS A MATCH");
+        alert ("It's A Match");
+
       } else {
+        alert ("That's the same tile!");
+
         setTriesLeft(triesLeft - 1);
         setScore(score - 0.5);
-        setForm({
-          ...form,
-          [score]: score -0.5,
-        });
+        setPairArray([]);
+
         const currTile = document.getElementById(first);
         currTile.style.boxShadow = "0 0 1vw 1vw red";
         setTimeout(function () {
           currTile.style.boxShadow = "0 0 1vw 1vw #F2F230";
         }, 1000);
-        setPairArray([]);
       }
     } else if (pairArray.length === 2 && pairArray[0] != pairArray[1]) {
+     
+
       setTriesLeft(triesLeft - 1);
       setScore(score - 0.5);
-      setForm({
-        ...form,
-        [score]: score -0.5,
-      });
+      setTimeout(function () {
+        alert ("It's Not A Match");
+      }, 500);
       setPairArray([]);
     }
   }, [pairArray]);
@@ -104,6 +105,20 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
     }
   }, [gameOver]);
   
+  const start=()=>{
+    setGameOver(false)
+    setScore(0)
+    setDidShuffleArray(false)
+    setInprogress(true)
+    setPlayerName("")
+    setLost(false)
+    setPairArray([])
+    setTriesLeft(tileArray.length)
+    setTilesOnScreen(tileArray.length)
+    setWon(false)
+    
+
+  }
   function Tile(src, id, name) {
     const [isVisible, setIsVisible] = useState(false);
     // playSound(event) {
@@ -120,7 +135,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
       setTimeout(function () {
         setIsVisible(false);
-      }, 2000);
+      }, 2500);
     };
     return (
       <div onClick={visible} className="tile" key={id} id={id} name={name}>
@@ -224,6 +239,12 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   return (
     <div>
+      {gameOver? <h1>
+          <button onClick={start} className="newFormButton">
+            {" "}
+            <a>New Game</a>{" "}
+          </button>
+      </h1>  : <></> }
       {gameOver && won ? (
         <Form className="game" id={formId} onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
