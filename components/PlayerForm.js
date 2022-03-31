@@ -11,13 +11,13 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const [message, setMessage] = useState("");
   const [pairArray, setPairArray] = useState([]);
   const [didShuffleArray, setDidShuffleArray] = useState(false);
-  const [inProgress, setInprogress] = useState(false);
+  const [inProgress, setInprogress] = useState(true);
   const [won, setWon] = useState(false);
   const [lost, setLost] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [score, setScore] = useState(0);
-  const [triesLeft, setTriesLeft] = useState(tileArray.length / 2);
-  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length);
+  const [triesLeft, setTriesLeft] = useState(tileArray.length);
+  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length );
   const [gameOver, setGameOver] = useState(false);
 
   const [form, setForm] = useState({
@@ -86,7 +86,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         console.log("Y0U LOSE!");
         setLost(true);
       } else {
-        console.log("YOU WIN!");
+      setScore(score + triesLeft)
         setWon(true);
       }
       setGameOver(true);
@@ -103,10 +103,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
     }
   }, [gameOver]);
-  const start = () => {
-    setInprogress(true);
-
-  };
+  
   function Tile(src, id, name) {
     const [isVisible, setIsVisible] = useState(false);
     // playSound(event) {
@@ -266,10 +263,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
       )}
 
       <div className="game">
-        <button className="start" onClick={start}>
-          {" "}
-          {inProgress ? "Restart" : "Start"}{" "}
-        </button>
+        
 
         {lost ? (
           <div>

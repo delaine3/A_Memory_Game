@@ -1,28 +1,18 @@
 import '../css/style.css'
 import '../css/form.css'
 import Head from 'next/head'
-import Link from 'next/link'
 
 function MyApp({ Component, pageProps }) {
   return (
     <div className='app'>
       <Head>
-        <title>Story Book App</title>
+        <title>Memory Game App</title>
       </Head>
 
       <div className="top-bar">
-          <Link href="/">
-          <div className="home">
-
-            <a>Home</a>
-            </div>
-          </Link>
-         
-       
-        
-
+        <h1>Memory Game</h1>
       </div>
-      <div className="grid wrapper ">
+      <div className=" wrapper ">
         <Component {...pageProps} />
       </div>
     </div>
