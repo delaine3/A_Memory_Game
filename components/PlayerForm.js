@@ -17,7 +17,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const [playerName, setPlayerName] = useState("");
   const [score, setScore] = useState(0);
   const [triesLeft, setTriesLeft] = useState(tileArray.length);
-  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length );
+  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length);
   const [gameOver, setGameOver] = useState(false);
 
   const [form, setForm] = useState({
@@ -43,8 +43,11 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
       if (first != second) {
         selectElements.forEach((anchor) => {
-          anchor.style.display = "none";
+          setTimeout(function () {
+            anchor.style.display = "none";
+          }, 1000);
         });
+
         setPairArray([]);
         setScore(score + 1);
         setForm({
@@ -58,7 +61,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         setScore(score - 0.5);
         setForm({
           ...form,
-          [score]: score -0.5,
+          [score]: score - 0.5,
         });
         const currTile = document.getElementById(first);
         currTile.style.boxShadow = "0 0 1vw 1vw red";
@@ -68,14 +71,12 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         setPairArray([]);
       }
     } else if (pairArray.length === 2 && pairArray[0] != pairArray[1]) {
-      console.log("ITS NOT A MATCH!");
       setTriesLeft(triesLeft - 1);
       setScore(score - 0.5);
       setForm({
         ...form,
-        [score]: score -0.5,
+        [score]: score - 0.5,
       });
-      console.log(pairArray[0][1] + " " + pairArray[1][1]);
       setPairArray([]);
     }
   }, [pairArray]);
@@ -86,7 +87,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         console.log("Y0U LOSE!");
         setLost(true);
       } else {
-      setScore(score + triesLeft)
+        setScore(score + triesLeft);
         setWon(true);
       }
       setGameOver(true);
@@ -97,13 +98,11 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   useEffect(() => {
     if (gameOver) {
-     
       setTilesOnScreen(tileArray.length);
       setTriesLeft(tileArray.length);
-
     }
   }, [gameOver]);
-  
+
   function Tile(src, id, name) {
     const [isVisible, setIsVisible] = useState(false);
     // playSound(event) {
@@ -120,7 +119,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
       setTimeout(function () {
         setIsVisible(false);
-      }, 1000);
+      }, 2000);
     };
     return (
       <div onClick={visible} className="tile" key={id} id={id} name={name}>
@@ -202,8 +201,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
     const target = e.target;
     const value = target.value;
 
-    setPlayerName(value)
- 
+    setPlayerName(value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -263,8 +261,6 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
       )}
 
       <div className="game">
-        
-
         {lost ? (
           <div>
             {" "}
