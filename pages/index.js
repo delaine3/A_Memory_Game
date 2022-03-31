@@ -30,7 +30,7 @@ const Index = ({ player }) => {
       </h1>
       <h1>Leader Board</h1>
       <div className="headers">
-      <h2 className="score">Score </h2>
+      <h2 className="score">Scores </h2>
       <h2 className="player-name">Player name</h2>
       </div>
      

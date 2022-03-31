@@ -224,7 +224,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   return (
     <div>
-      {gameOver ? (
+      {gameOver && won ? (
         <Form className="game" id={formId} onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
 
