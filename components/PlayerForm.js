@@ -239,6 +239,15 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   return (
     <div>
+         <h1>
+        <Link href="/">
+          <button className="newFormButton">
+            {" "}
+            <a>Leader Board</a>{" "}
+          </button>
+        </Link>
+
+      </h1>
       {gameOver? <h1>
           <button onClick={start} className="newFormButton">
             {" "}
