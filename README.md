@@ -5,11 +5,11 @@ This is a game where you have to turn over different tiles and try to find match
 Some of the ideas from this game are adapted from the the following [Free Code Cap Tutorial Video](https://www.youtube.com/watch?v=lhNdUVh3qCc&t=3s). You can find the original source code of this tutorial in the following [Github repo](https://github.com/kubowania/memory-game) The original source contains an MIT license which allows anyone to use it. The game in the FreeCodeCamp Tutorial Video is made using Vanilla Javascript and minimal css. Mine is created using the technologies below.
 
 Technologies used:
--MongoDB
--Express
--ReactJS
--NodeJS
--NextJS
+- MongoDB
+- Express
+- ReactJS
+- NodeJS
+- NextJS
 
 ## Getting Started
 
