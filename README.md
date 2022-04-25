@@ -11,7 +11,7 @@ Technologies used:
 - NodeJS
 - NextJS
 
-[Go to live version of app](https://day-dream.vercel.app/)
+[Go to live version of app](https://a-memory-game-seven.vercel.app/)
 ## Getting Started
 
 First, run the development server:
