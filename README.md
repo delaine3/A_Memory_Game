@@ -11,6 +11,7 @@ Technologies used:
 - NodeJS
 - NextJS
 
+[Go to live version of app](https://day-dream.vercel.app/)
 ## Getting Started
 
 First, run the development server:
