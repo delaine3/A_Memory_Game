@@ -151,7 +151,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
       setTimeout(function () {
         setIsVisible(false);
-      }, 2000);
+      }, 1500);
     };
     return (
       <div onClick={visible} key={id} className="square">
@@ -257,7 +257,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   return (
     <div>
       <p className="instructions">
-        Try to find all matching tiles. Clicking on a gray tile or selecting
+        Double click to select tiles and try to find all matching tiles. Clicking on a gray tile or selecting
         unmatching tiles will cause you to lose points and reduce your number of
         tries.
       </p>
