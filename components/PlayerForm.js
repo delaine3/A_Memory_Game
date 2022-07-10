@@ -19,7 +19,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const [clickCounter, setClickCounter] = useState(0);
 
   const [score, setScore] = useState(0);
-  const [triesLeft, setTriesLeft] = useState(tileArray.length +14);
+  const [triesLeft, setTriesLeft] = useState(tileArray.length + 14);
   const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length);
   const [gameOver, setGameOver] = useState(false);
   const [deadTiles, setDeadTiles] = useState([]);
@@ -71,6 +71,8 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         });
         setTilesOnScreen(tilesOnScreen - 2);
         console.log("ITS A MATCH");
+        setClickCounter(0);
+
         //alert("It's A Match");
       } else {
         var selectElements = document.querySelectorAll(
@@ -78,11 +80,14 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         );
         let first = pairArray[0][1];
         let second = pairArray[1][1];
+        setClickCounter(0);
+
         if (deadTiles[deadTiles.length - 1]?.includes(first || second)) {
           setPairArray([]);
 
           return;
         }
+
         //alert("That's the same tile!");
 
         setTriesLeft(triesLeft - 1);
@@ -97,8 +102,8 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
       setTriesLeft(triesLeft - 1);
       setScore(score - 0.5);
       setTimeout(function () {
-        //alert("It's Not A Match");
-      }, 500);
+        setClickCounter(0);
+      }, 1500);
       setPairArray([]);
     }
   }, [pairArray]);
@@ -257,9 +262,9 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   return (
     <div>
       <p className="instructions">
-        Double click to select tiles and try to find all matching tiles. Clicking on a gray tile or selecting
-        unmatching tiles will cause you to lose points and reduce your number of
-        tries.
+        Select tiles and try to find all matching tiles. Clicking on a gray tile
+        or selecting unmatching tiles will cause you to lose points and reduce
+        your number of tries.
       </p>
 
       <h1>
