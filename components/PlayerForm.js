@@ -19,7 +19,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const [clickCounter, setClickCounter] = useState(0);
 
   const [score, setScore] = useState(0);
-  const [triesLeft, setTriesLeft] = useState(tileArray.length);
+  const [triesLeft, setTriesLeft] = useState(tileArray.length +14);
   const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length);
   const [gameOver, setGameOver] = useState(false);
   const [deadTiles, setDeadTiles] = useState([]);
