@@ -16,11 +16,13 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   const [won, setWon] = useState(false);
   const [lost, setLost] = useState(false);
   const [playerName, setPlayerName] = useState("");
+  const [clickCounter, setClickCounter] = useState(0);
+
   const [score, setScore] = useState(0);
   const [triesLeft, setTriesLeft] = useState(tileArray.length);
-  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length );
+  const [tilesOnScreen, setTilesOnScreen] = useState(tileArray.length);
   const [gameOver, setGameOver] = useState(false);
-
+  const [deadTiles, setDeadTiles] = useState([]);
   const [form, setForm] = useState({
     name: playerName,
     score: score,
@@ -33,19 +35,34 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
   }, [didShuffleArray]);
 
   useEffect(() => {
+    /*The fist and second items in the list are the same. 
+    The items in the list are strings describing the tile*/
     if (pairArray.length === 2 && pairArray[0][0] === pairArray[1][0]) {
+      //Find al the divs with that name
       var selectElements = document.querySelectorAll(
         "div[name=" + pairArray[0][0] + "]"
       );
       let first = pairArray[0][1];
       let second = pairArray[1][1];
+      if (deadTiles[deadTiles.length - 1]?.includes(first || second)) {
+        setPairArray([]);
 
+        return;
+      }
+      console.log(deadTiles[deadTiles.length - 1]?.includes(first));
+      console.log(deadTiles);
       if (first != second) {
+        setDeadTiles((oldArray) => [...oldArray, [first, second]]);
+
         selectElements.forEach((anchor) => {
-          anchor.style.display = "none";
-          
+          //console.log(anchor);
+          anchor.parentElement.removeAttribute("onClick");
+          //  anchor.parentElement.classList.add("off");
+          anchor.parentElement.setAttribute("id", "off");
+          //console.log(anchor.parentElement);
+          //anchor.remove();
+          //console.log(anchor.parentElement);
         });
-        
         setPairArray([]);
         setScore(score + 1);
         setForm({
@@ -54,28 +71,33 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         });
         setTilesOnScreen(tilesOnScreen - 2);
         console.log("ITS A MATCH");
-        alert ("It's A Match");
-
+        //alert("It's A Match");
       } else {
-        alert ("That's the same tile!");
+        var selectElements = document.querySelectorAll(
+          "div[name=" + pairArray[0][0] + "]"
+        );
+        let first = pairArray[0][1];
+        let second = pairArray[1][1];
+        if (deadTiles[deadTiles.length - 1]?.includes(first || second)) {
+          setPairArray([]);
+
+          return;
+        }
+        //alert("That's the same tile!");
 
         setTriesLeft(triesLeft - 1);
         setScore(score - 0.5);
         setPairArray([]);
-
-        const currTile = document.getElementById(first);
-        currTile.style.boxShadow = "0 0 1vw 1vw red";
-        setTimeout(function () {
-          currTile.style.boxShadow = "0 0 1vw 1vw #F2F230";
-        }, 1000);
       }
     } else if (pairArray.length === 2 && pairArray[0] != pairArray[1]) {
-     
+      /*If there are 2 items in the list and the first item in the 
+     list != the second item in the list, reduce the number of tries
+      and score and reset the list*/
 
       setTriesLeft(triesLeft - 1);
       setScore(score - 0.5);
       setTimeout(function () {
-        alert ("It's Not A Match");
+        //alert("It's Not A Match");
       }, 500);
       setPairArray([]);
     }
@@ -87,7 +109,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
         console.log("Y0U LOSE!");
         setLost(true);
       } else {
-      setScore(score + triesLeft)
+        setScore(score + triesLeft);
         setWon(true);
       }
       setGameOver(true);
@@ -98,52 +120,48 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   useEffect(() => {
     if (gameOver) {
-     
       setTilesOnScreen(tileArray.length);
       setTriesLeft(tileArray.length);
-
     }
   }, [gameOver]);
-  
-  const start=()=>{
-    setGameOver(false)
-    setScore(0)
-    setDidShuffleArray(false)
-    setInprogress(true)
-    setPlayerName("")
-    setLost(false)
-    setPairArray([])
-    setTriesLeft(tileArray.length)
-    setTilesOnScreen(tileArray.length)
-    setWon(false)
-    
 
-  }
+  const start = () => {
+    setGameOver(false);
+    setScore(0);
+    setDidShuffleArray(false);
+    setInprogress(true);
+    setPlayerName("");
+    setLost(false);
+    setPairArray([]);
+    setTriesLeft(tileArray.length);
+    setTilesOnScreen(tileArray.length);
+    setWon(false);
+  };
   function Tile(src, id, name) {
     const [isVisible, setIsVisible] = useState(false);
-    // playSound(event) {
-    //   let sound = document.getElementById(this.props.keyTrigger);
-    //   sound.volume = this.props.volume;
 
-    //   sound.currentTime = 0;
-    //   sound.play();
-    //   this.props.updateSoundDisplay(this.props.id);
-    // }
     const visible = () => {
-      setIsVisible(true);
+      if (deadTiles.includes(id) || clickCounter > 1) {
+        setClickCounter(0);
+        return;
+      }
+      setClickCounter(clickCounter + 1);
       setPairArray((oldArray) => [...oldArray, [name, id]]);
+      setIsVisible(true);
 
       setTimeout(function () {
         setIsVisible(false);
-      }, 2500);
+      }, 2000);
     };
     return (
-      <div onClick={visible} className="tile" key={id} id={id} name={name}>
-        {isVisible ? (
-          <img className="tile-container" src={src} />
-        ) : (
-          <div> </div>
-        )}
+      <div onClick={visible} key={id} className="square">
+        <div className="tile" key={id} id={id} name={name}>
+          {isVisible ? (
+            <img className="tile-container" src={src} />
+          ) : (
+            <div className=""> </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -217,8 +235,7 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
     const target = e.target;
     const value = target.value;
 
-    setPlayerName(value)
- 
+    setPlayerName(value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -239,21 +256,30 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
 
   return (
     <div>
-         <h1>
+      <p className="instructions">
+        Try to find all matching tiles. Clicking on a gray tile or selecting
+        unmatching tiles will cause you to lose points and reduce your number of
+        tries.
+      </p>
+
+      <h1>
         <Link href="/">
           <button className="newFormButton">
             {" "}
             <a>Leader Board</a>{" "}
           </button>
         </Link>
-
       </h1>
-      {gameOver? <h1>
+      {gameOver ? (
+        <h1>
           <button onClick={start} className="newFormButton">
             {" "}
             <a>New Game</a>{" "}
           </button>
-      </h1>  : <></> }
+        </h1>
+      ) : (
+        <></>
+      )}
       {gameOver && won ? (
         <Form className="game" id={formId} onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
@@ -293,8 +319,6 @@ const PlayerForm = ({ formId, PlayerForm, fornewPlayer = true }) => {
       )}
 
       <div className="game">
-        
-
         {lost ? (
           <div>
             {" "}
