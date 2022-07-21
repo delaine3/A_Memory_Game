@@ -17,15 +17,50 @@ body {
   padding: 0px;
   overflow-x: hidden;
 }
-.instructions{
+.score-board {
+  width: 70%;
+  min-width: min-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.score {
+  background-color: rgba(217, 255, 228, 0.699);
+  box-shadow: 0 0 1vw 1vw rgba(217, 255, 228, 0.699);
+  display: flex;
+  width: fit-content;
+  grid-template-columns: auto auto;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+.slot {
+  width: 130px;
+  margin: 15px;
+}
+@media only screen and (max-width: 600px) {
+  .score-board {
+    width: 100%;
+    min-width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .slot {
+    width: 130px;
+    margin: 15px;
+  }
+}
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+.instructions {
   width: 80%;
   margin: auto;
   background-color: rgba(240, 248, 255, 0.644);
   padding: 5px;
   box-shadow: rgba(240, 248, 255, 0.644) 1px 1px 5px 5px;
 }
-.app {
-}
+
 * {
   font-family: "Open Sans", sans-serif;
 }
@@ -115,12 +150,6 @@ img {
   display: grid;
   grid-template-columns: auto auto auto auto;
 }
-.score-inner-grid {
-  display: grid;
-  grid-template-columns: auto auto;
-  margin: auto;
-  width: 50%;
-}
 
 .headers h2 {
   display: inline-block;
@@ -131,14 +160,7 @@ img {
   font-size: x-large;
   margin: auto;
 }
-.score {
-  float: right;
-  text-decoration: underline;
-}
-.player-name {
-  float: left;
-  text-decoration: underline;
-}
+
 img {
   padding: 1%;
   background-color: aliceblue;
@@ -147,7 +169,7 @@ img {
   margin: 2%;
   width: 10vw;
   height: 10vw;
-  background-color:  rgb(155, 152, 179);
+  background-color: rgb(155, 152, 179);
   transition: display 0s, opacity 0.5s linear;
 }
 #off img {

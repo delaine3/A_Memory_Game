@@ -26,27 +26,28 @@ const Index = ({ player }) => {
             <a>New Game</a>{" "}
           </button>
         </Link>
-
       </h1>
       <h1>Leader Board</h1>
-      <div className="headers">
-      <h2 className="score">Scores </h2>
-      <h2 className="player-name">Player name</h2>
-      </div>
-     
-
-      {/* Create a row for each player */}
-      <div >
-           
-        <ol >
+      <ul className="score-board">
+        <li className="score header" id="myHeader">
+          <span className="slot">
+            <h2>Player</h2>{" "}
+          </span>
+          <span className="slot">
+            <h2>Score</h2>
+          </span>
+        </li>
         {player.map((player) => (
-          <li className="score-inner-grid">
-              <span ><h2>{player.name}</h2> </span>
-              <span ><h2>{player.score}</h2> </span>
+          <li key={player._id} className="score">
+            <span className="slot">
+              <h2>{player.name}</h2>{" "}
+            </span>
+            <span className="slot">
+              <h2> {player.score}</h2>{" "}
+            </span>
           </li>
         ))}
-        </ol>
-      </div>
+      </ul>
     </div>
   );
 };
@@ -56,7 +57,7 @@ export async function getServerSideProps() {
   await dbConnect();
 
   /* find all the data  our database */
-  const result = await Player.find().sort([['score', 'descending']])
+  const result = await Player.find().sort([["score", "descending"]]);
   const player = result.map((doc) => {
     const player = doc.toObject();
     player._id = player._id.toString();
